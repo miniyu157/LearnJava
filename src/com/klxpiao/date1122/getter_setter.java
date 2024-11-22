@@ -5,6 +5,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 
 public class getter_setter {
+    //I declare that the properties of Java are the sons of CSharp
     public static void main(String[] args) throws Exception {
 
     }
