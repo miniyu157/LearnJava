@@ -2,7 +2,6 @@ package com.klxpiao.date1124
 
 //不用导入各种命名空间了，和C#一样。
 
-
 class BubblingSorting {
     /**
      * 对数组进行冒泡排序 (升序)。
@@ -12,8 +11,8 @@ class BubblingSorting {
      */
     fun bubbleSort(
         arr: IntArray,
-        reversal: Boolean = false
-    ) { //和C#一样支持可选参数。
+        reversal: Boolean = false //和C#一样支持可选参数。
+    ) {
         for (i in arr.indices) {
             var swapped = false //标记是否发生交换
             for (j in 0 until arr.size - i - 1) { //确定不是抄VB.NET??
@@ -34,7 +33,7 @@ fun main() {
     val sorting = BubblingSorting()
 
     sorting.bubbleSort(arr)
-    println("升序排序结果: ${arr.contentToString()}")
+    println("升序排序结果: ${arr.contentToString()}") //竟然可以插值了
 
     sorting.bubbleSort(arr, true)
     println("降序排序结果: ${arr.contentToString()}")
