@@ -1,10 +1,6 @@
-package com.klxpiao.date1122;
+package com.klxpiao.learn;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-
-public class getter_setter {
+public class LearnJavaBean {
     //I declare that the properties of Java are the sons of CSharp
     public static void main(String[] args) throws Exception {
 

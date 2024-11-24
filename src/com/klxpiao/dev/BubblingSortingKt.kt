@@ -1,8 +1,8 @@
-package com.klxpiao.date1124
+package com.klxpiao.dev
 
 //不用导入各种命名空间了，和C#一样。
 
-class BubblingSorting {
+class BubblingSortingKt {
     /**
      * 对数组进行冒泡排序 (升序)。
      *
@@ -30,7 +30,7 @@ class BubblingSorting {
 
 fun main() {
     val arr = intArrayOf(45, 96, 85, 32, 14, 25)
-    val sorting = BubblingSorting()
+    val sorting = BubblingSortingKt()
 
     sorting.bubbleSort(arr)
     println("升序排序结果: ${arr.contentToString()}") //竟然可以插值了

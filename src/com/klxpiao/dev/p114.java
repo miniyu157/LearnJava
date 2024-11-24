@@ -1,4 +1,4 @@
-package com.klxpiao.date1121;
+package com.klxpiao.dev;
 
 import java.util.Arrays;
 import java.util.Scanner;

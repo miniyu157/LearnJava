@@ -1,15 +1,12 @@
-package com.klxpiao.date1120;
+package com.klxpiao.learn;
 
-//字符串模版在 java23 中被阉割
-//import static java.lang.StringTemplate.STR;
-
-public class sJTest {
+public class LearnStringJoiner {
     public static void main(String[] args) {
         String[] fields = {"name", "position", "salary"};
         String table = "employee";
         String select = buildSelectSql(table, fields);
         System.out.println(select);
-        System.out.println("SELECT name, position, salary FROM employee".equals(select) ? "测试成功" : "测试失败");
+        System.out.println("SELECT name, position, salary FORM employee".equals(select) ? "测试成功" : "测试失败");
     }
 
 /* 使用StringJoiner
@@ -24,11 +21,9 @@ public class sJTest {
     }
 */
 
+    //使用String.join
     static String buildSelectSql(String table, String[] fields) {
         return String.format("SELECT %s FORM %s", String.join(", ", fields), table);
-        //return "SELECT " + String.join(", ", fields) + " FROM " + table;
-
-        //return java.lang.StringTemplate.STR."SELECT \{String.join(", ", fields)} FROM \{table}";
     }
 
 }

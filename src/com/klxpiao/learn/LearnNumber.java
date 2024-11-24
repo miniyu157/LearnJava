@@ -1,4 +1,4 @@
-package com.klxpiao.date1120;
+package com.klxpiao.learn;
 
 public class LearnNumber {
     public static void main(String[] args) {

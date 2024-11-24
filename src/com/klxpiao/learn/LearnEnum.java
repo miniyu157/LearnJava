@@ -1,4 +1,4 @@
-package com.klxpiao.date1123;
+package com.klxpiao.learn;
 
 /**
  *  不能直接强转为int

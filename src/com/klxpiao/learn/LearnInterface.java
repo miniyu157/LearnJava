@@ -1,5 +1,9 @@
-package com.klxpiao.date1119;
+package com.klxpiao.learn;
 
+enum GameEnum {
+    GenshinImpact,
+    Phigros
+}
 public class LearnInterface {
     public static void main(String[] args) {
         ThisGame = GameEnum.Phigros;
