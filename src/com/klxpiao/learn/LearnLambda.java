@@ -26,7 +26,7 @@ public class LearnLambda {
         System.out.println("Squares: " + squares);
         System.out.println("Even Squares: " + evenSquares);
 
-        numbers.forEach(System.out::println); //不用显式调用lambda表达式，直接调用方法引用
+        numbers.forEach(System.out::println); //不用显式调用lambda表达式，直接调用方法引用(类型::静态方法名)
         numbers.forEach(num -> System.out.println(num));
     }
 }

@@ -12,7 +12,6 @@ import static java.lang.System.out;
 public class LearnRecord {
     public static void main(String[] args) {
         PointF pf = new PointF(3.5F, 2.8F);
-
         PointF pf2 = PointF.of(4.6F, 1.7F);
         PointF pf3 = PointF.of(1.414213F);
 

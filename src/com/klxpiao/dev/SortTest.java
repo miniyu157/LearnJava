@@ -1,10 +1,10 @@
-package com.klxpiao.learn;
+package com.klxpiao.dev;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LearnSort {
+public class SortTest {
     public static void main(String[] args) {
         int[] array = {1, 2, 3};
         List<Integer> list = new ArrayList<>();
