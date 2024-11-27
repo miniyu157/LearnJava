@@ -1,10 +1,10 @@
-package com.klxpiao.learn.regex;
+package com.klxpiao.learn.LearnRegex;
 
 import java.util.List;
 
 import static java.lang.System.out;
 
-public class LearnRegex01 {
+public class RegexBase {
     public static void main(String[] args) {
 
 //        out.println("  sdfsd    ".stripLeading());//去除前面的空格
