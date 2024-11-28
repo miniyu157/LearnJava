@@ -57,11 +57,15 @@ public class p114 {
 
         out.print("请输入购买数量(输入0取消购买): ");
         int count = sc.nextInt();
-        if (count == 0)
-            WhetherToContinue(args);
+        if (count == 0) WhetherToContinue(args);
 
-        if (count > Integer.parseInt(data[3])) {
-            out.println("商品数量不足");
+        try {
+            if (count > Integer.parseInt(data[3])) {
+                out.println("商品数量不足");
+                WhetherToContinue(args);
+            }
+        } catch (Exception ex) {
+            out.println("请输入数字");
             WhetherToContinue(args);
         }
 
