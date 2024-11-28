@@ -1,5 +1,6 @@
 package com.klxpiao.learn.LearnMath;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 import static java.lang.System.out;
@@ -22,6 +23,12 @@ public class LearnMath {
         int original = 12345678;
         out.printf("Custom: %s\n", customToHex(original));
         out.printf("Integer.toHexString: %s\n", Integer.toHexString(original));
+
+        Random rand = new Random();
+        out.println(rand.nextInt(100, 200));
+
+        SecureRandom sr = new SecureRandom(); //更随机的随机数
+        out.println(sr.nextInt(100, 200));
     }
 
     static String customToHex(int n) {

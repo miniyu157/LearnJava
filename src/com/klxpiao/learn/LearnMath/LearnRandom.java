@@ -6,7 +6,7 @@ import static java.lang.System.out;
 public class LearnRandom {
     public static void main(String[] args) {
         Random rand = new Random();
-        int randomNum = 300 + rand.nextInt(500 - 300); //👎🏻C#'s rand.Next(300, 500);
+        int randomNum = rand.nextInt(300,500); //👌== C#'s Math.Next(mix, max)
         out.println(randomNum);
 
         out.println(Math.random()); //out double of 0-1
