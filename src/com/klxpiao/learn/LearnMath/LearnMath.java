@@ -21,7 +21,6 @@ public class LearnMath {
 
         //dec to hex
         int original = 12345678;
-        out.printf("Custom: %s\n", customToHex(original));
         out.printf("Integer.toHexString: %s\n", Integer.toHexString(original));
 
         Random rand = new Random();
@@ -30,16 +29,4 @@ public class LearnMath {
         SecureRandom sr = new SecureRandom(); //更随机的随机数
         out.println(sr.nextInt(100, 200));
     }
-
-    static String customToHex(int n) {
-        StringBuilder hexString = new StringBuilder();
-        char[] chars = "0123456789ABCDEF".toCharArray();
-
-        while (n > 0) {
-            hexString.insert(0, chars[n % 16]);
-            n /= 16;
-        }
-        return String.format("0x%s", hexString);
-    }
-
 }
