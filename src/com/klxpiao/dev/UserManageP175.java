@@ -1,20 +1,20 @@
 package com.klxpiao.dev;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.System.out;
 
 public class UserManageP175 {
     private static final Scanner sc = new Scanner(System.in);
-    private static final List<UserInfo> USERINFOS;
+    private static final List<UserInfo> AllUser = new ArrayList<>();
 
     static {
-        USERINFOS = new ArrayList<>();
-        USERINFOS.add(new UserInfo("王二", "女", "25", "13987654321"));
-        USERINFOS.add(new UserInfo("张三", "男", "30", "123-874569"));
-        USERINFOS.add(new UserInfo("李四", "女", "25", "+8619988765432"));
+        String[][] users = {
+                {"王二", "女", "25", "13987654321"},
+                {"张三", "男", "38", "+8612345678910"},
+                {"李四", "女", "25", "+01100-12345"}
+        };
+        addArrays(users);
     }
 
     public static void main(String[] args) {
@@ -32,11 +32,11 @@ public class UserManageP175 {
             out.print("请选择: ");
 
             switch (sc.next()) {
-                case "1" -> add(-1);
+                case "1" -> add();
                 case "2" -> query();
                 case "3" -> modify();
                 case "4" -> delete();
-                case "5" -> System.exit(0);
+                case "5" -> exit();
                 default -> out.println("输入错误。");
             }
         }
@@ -45,28 +45,35 @@ public class UserManageP175 {
     /**
      * 客户信息。
      *
-     * @param name        姓名。
-     * @param sex         性别。
-     * @param age         年龄。
-     * @param phone       电话。
-     * @param errorStatus 异常状态，请勿手动设置此属性，自动状态：0为正常，-1错误。
+     * @param name  姓名。
+     * @param sex   性别。
+     * @param age   年龄。
+     * @param phone 电话。
      */
-    record UserInfo(String name, String sex, String age, String phone, int... errorStatus) {
-        public UserInfo {
-            errorStatus = new int[]{0};
+    record UserInfo(String name, String sex, String age, String phone) {
+        public static UserInfo Empty = null;
 
+        public UserInfo {
             if (!phone.replaceAll("[\\-+]", "").matches("\\d+")) {
-                out.println("电话只能由数字、加号和减号组成。");
-                errorStatus[0] = -1;
+                throw new IllegalArgumentException("电话只能由数字、加号和减号组成。");
             }
 
             if (!age.matches("\\d+") || Integer.parseInt(age) < 0) {
-                out.println("年龄只能由数字组成，且不能为负数。");
-                errorStatus[0] = -1;
+                throw new IllegalArgumentException("年龄只能由数字组成，且不能为负数。");
             }
         }
     }
 
+    /**
+     * 退出系统。
+     */
+    static void exit() {
+        out.print("确定要退出系统吗？(Y/N)");
+        if (sc.next().equalsIgnoreCase("y")) {
+            out.println("退出系统。");
+            System.exit(0);
+        }
+    }
 
     /**
      * 按任意键回车返回。
@@ -77,91 +84,67 @@ public class UserManageP175 {
     }
 
     /**
-     * 输入编号。
+     * 使用二维数组添加用户信息。
      *
-     * @return 编号。
+     * @param users 添加用户信息的二维数组。
      */
-    static int inputID() {
-        int id = -1;
-        try {
-            id = sc.nextInt();
-        } catch (Exception ex) {
-            out.println("请输入数字。");
-            System.exit(0);
-        }
-
-        if (id <= 0 || id > USERINFOS.size()) {
-            out.println("编号不存在。");
-            System.exit(0);
-        }
-        return id;
+    static void addArrays(String[][] users) {
+        Arrays.stream(users).forEach(u -> AllUser.add(new UserInfo(u[0], u[1], u[2], u[3])));
     }
 
     /**
-     * 添加客户信息。
+     * 删除用户信息。
+     *
+     * @param index 要删除的用户索引。
      */
-    static void add(int index) {
-        out.println(index == -1 ? "客户管理>>添加客户信息\n********************************" : "");
+    static void removeUser(int index) {
+        if (index < 0 || index >= AllUser.size())
+            throw new IndexOutOfBoundsException("未找到。");
+        AllUser.remove(index);
+    }
 
+    /**
+     * 列举客户信息。
+     */
+    static void showUserInfo() {
+        out.println("编号\t姓名\t性别\t年龄\t电话");
+
+        for (int i = 0; i < AllUser.size(); i++) {
+            UserInfo user = AllUser.get(i);
+            out.printf("%s\t%s\t%s\t%s\t%s\n", i + 1, user.name, user.sex, user.age, user.phone);
+        }
+    }
+
+    /**
+     * 输入用户信息。
+     *
+     * @return 新的 UserInfo 对象。
+     */
+    static UserInfo inputUserInfo() {
         String[] titles = {"姓名: ", "性别: ", "年龄: ", "电话: "};
         String[] values = new String[4];
         for (int i = 0; i < titles.length; i++) {
             out.print(titles[i]);
             values[i] = sc.next();
         }
+        return new UserInfo(values[0], values[1], values[2], values[3]);
+    }
 
-        out.println(index == -1 ? "********************************" : "");
-
-        UserInfo u = new UserInfo(values[0], values[1], values[2], values[3]);
-
-        if (u.errorStatus[0] == 0) { //无错误即可添加
-            if (index == -1)
-                USERINFOS.add(u);
-            else
-                USERINFOS.set(index, u);
-
-            out.printf("客户 '%s' %s成功!\n", values[0], index == -1 ? "添加" : "修改");
+    /**
+     * 添加客户信息。
+     */
+    static void add() {
+        out.println("客户管理>>添加客户信息\n********************************");
+        String message;
+        try {
+            UserInfo u = inputUserInfo();
+            AllUser.add(u);
+            message = String.format("客户 '%s' 添加成功!\n", u.name);
+        } catch (Exception ex) {
+            message = ex.getMessage();
         }
-        pressEnterToReturn();
-    }
 
-    /**
-     * 列举客户信息。
-     *
-     * @param title 标题。
-     */
-    static void showUserInfo(String title) {
-        out.printf("""
-                %s
-                ********************************
-                编号\t姓名\t性别\t年龄\t电话
-                """, title);
-
-        for (int i = 0; i < USERINFOS.size(); i++) {
-            UserInfo user = USERINFOS.get(i);
-            out.printf("%s\t%s\t%s\t%s\t%s\n", i + 1, user.name, user.sex, user.age, user.phone);
-        }
-        out.println("********************************");
-    }
-
-    /**
-     * 查询客户信息。
-     */
-    static void query() {
-        showUserInfo("查询");
-        pressEnterToReturn();
-    }
-
-    /**
-     * 删除客户信息。
-     */
-    static void delete() {
-        showUserInfo("客户管理>>删除客户信息");
-
-        out.print("请选择要删除的客户编号: ");
-        USERINFOS.remove(inputID() - 1);
-
-        out.println("删除成功!");
+        out.println(message);
         pressEnterToReturn();
     }
 
@@ -169,9 +152,69 @@ public class UserManageP175 {
      * 修改客户信息。
      */
     static void modify() {
-        showUserInfo("客户管理>>修改客户信息");
+        out.println("客户管理>>修改客户信息\n********************************");
 
+        if (AllUser.isEmpty()) {
+            out.println("暂无客户信息。");
+            pressEnterToReturn();
+            return;
+        }
+
+        showUserInfo();
         out.print("请选择要修改的客户编号: ");
-        add(inputID() - 1);
+        try {
+            int id = sc.nextInt();
+            UserInfo u = inputUserInfo();
+            AllUser.set(id - 1, u);
+            out.printf("客户 '%s' 修改成功!\n", u.name);
+        } catch (InputMismatchException ex) {
+            out.println("请输入数字。");
+        } catch (Exception ex) {
+            out.println(ex.getMessage());
+        }
+        pressEnterToReturn();
+    }
+
+    /**
+     * 查询客户信息。
+     */
+    static void query() {
+        out.println("客户管理>>查询客户信息\n********************************");
+
+        if (AllUser.isEmpty()) {
+            out.println("暂无客户信息。");
+            pressEnterToReturn();
+            return;
+        }
+
+        showUserInfo();
+
+        pressEnterToReturn();
+    }
+
+    /**
+     * 删除客户信息。
+     */
+    static void delete() {
+        out.println("客户管理>>删除客户信息\n********************************");
+
+        if (AllUser.isEmpty()) {
+            out.println("暂无客户信息。");
+            pressEnterToReturn();
+            return;
+        }
+        showUserInfo();
+
+        out.print("请选择要删除的客户编号: ");
+        try {
+            removeUser(sc.nextInt() - 1);
+            out.println("删除成功!");
+        } catch (InputMismatchException ex) {
+            out.println("请输入数字。");
+        } catch (Exception ex) {
+            out.println(ex.getMessage());
+        }
+
+        pressEnterToReturn();
     }
 }
