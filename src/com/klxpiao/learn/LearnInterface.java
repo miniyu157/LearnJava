@@ -38,10 +38,10 @@ interface Person {
     }
 }
 
-class Student implements Person {
+class Student2 implements Person {
     private String name;
 
-    public Student(String name) {
+    public Student2(String name) {
         this.name = name;
     }
 

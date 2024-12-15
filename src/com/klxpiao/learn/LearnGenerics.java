@@ -22,3 +22,26 @@ public class LearnGenerics {
         return a.doubleValue() > b.doubleValue() ? a : b;
     }
 }
+
+class Pair<T> {
+    private T first;
+    private T last;
+
+    public Pair(T first, T last) {
+        this.first = first;
+        this.last = last;
+    }
+
+    public T getFirst() {
+        return null;
+    }
+
+    public T getLast() {
+        return null;
+    }
+
+    // 静态泛型方法应该使用其他类型区分:
+    public static <K> Pair<K> create(K first, K last) {
+        return new Pair<K>(first, last);
+    }
+}

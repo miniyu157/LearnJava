@@ -17,6 +17,10 @@ public record UserInfo(String name, String sex, String age, String phone) {
         }
     }
 
+    public static UserInfo of(String name, String sex, String age, String phone) {
+        return new UserInfo(name, sex, age, phone);
+    }
+
     public static UserInfo ofKeyboard() {
         Scanner sc = new Scanner(System.in);
         String[] titles = {"姓名: ", "性别: ", "年龄: ", "电话: "};

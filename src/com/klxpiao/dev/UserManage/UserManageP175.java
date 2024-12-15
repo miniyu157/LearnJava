@@ -23,7 +23,7 @@ public class UserManageP175 extends UserManageBase<UserInfo> {
      * @param users 用户信息数组。
      */
     private static void addArrays(String[][] users) {
-        Arrays.stream(users).forEach(u -> AllUser.add(new UserInfo(u[0], u[1], u[2], u[3])));
+        Arrays.stream(users).forEach(u -> AllUser.add(UserInfo.of(u[0], u[1], u[2], u[3])));
     }
 
     /**
@@ -37,6 +37,7 @@ public class UserManageP175 extends UserManageBase<UserInfo> {
 
     public static void main(String[] args) {
         UserManageP175 userManager = new UserManageP175(AllUser);
+
         Runnable exit = () -> {
             System.out.print("确定要退出系统吗? (y/n) ");
             if (sc.next().equalsIgnoreCase("y")) {
@@ -113,9 +114,10 @@ public class UserManageP175 extends UserManageBase<UserInfo> {
         out.print("请选择要修改的客户编号: ");
         try {
             int index = inputID();
+            String oldName = AllUser.get(index).name();
             UserInfo u = UserInfo.ofKeyboard();
             AllUser.set(index, u);
-            out.printf("客户 '%s' 修改成功!\n", u.name());
+            out.printf("客户 '%s' 修改成功!\n", oldName);
         } catch (InputMismatchException ex) {
             out.println("请输入数字。");
         } catch (Exception ex) {
@@ -138,8 +140,9 @@ public class UserManageP175 extends UserManageBase<UserInfo> {
         out.print("请选择要删除的客户编号: ");
         try {
             int index = inputID();
+            String oldName = AllUser.get(index).name();
             allUsers.remove(index);
-            out.println("删除成功!");
+            out.printf("客户 '%s' 删除成功!\n", oldName);
         } catch (InputMismatchException ex) {
             out.println("请输入数字。");
         } catch (Exception ex) {
