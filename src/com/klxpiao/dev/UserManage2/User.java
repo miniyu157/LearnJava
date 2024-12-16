@@ -1,8 +1,28 @@
 package com.klxpiao.dev.UserManage2;
 
+/**
+ * 记录类，用于存储用户信息。
+ *
+ * @param id    用户的唯一标识（ID）。
+ * @param name  用户的姓名。
+ * @param sex   用户的性别。
+ * @param age   用户的年龄。
+ * @param phone 用户的电话号码。
+ */
 public record User(String id, String name, String sex, int age, String phone) {
+    /**
+     * 静态字段，表示一个空的用户对象（等同于 null）。
+     */
+    public static User Empty = null;
+
+    /**
+     * 主构造方法的验证逻辑。
+     * 验证用户的年龄和电话号码格式是否正确。
+     *
+     * @throws UserCreateError 年龄小于等于 0 或电话号码格式不正确时抛出。
+     */
     public User {
-        if (age <= 0) throw new IllegalArgumentException("年龄必须大于0。");
+        if (age <= 0) throw new UserCreateError("年龄必须大于0。");
 
         /*
          正则表达式规则：
@@ -35,16 +55,42 @@ public record User(String id, String name, String sex, int age, String phone) {
         */
 
         if (!phone.matches("^\\+?(?!.*--)(?!.*-$)[0-9]+(-[0-9]+)*$")) {
-            throw new IllegalArgumentException("电话只能由数字、加号和减号组成，或者格式不正确。");
+            throw new UserCreateError("电话只能由数字、加号和减号组成，或者格式不正确。");
         }
     }
 
+    /**
+     * 静态工厂方法，用于创建一个新的用户对象。
+     *
+     * @param id    用户的唯一标识（ID）。
+     * @param name  用户的姓名。
+     * @param sex   用户的性别。
+     * @param age   用户的年龄。
+     * @param phone 用户的电话号码。
+     * @return 一个新的 User 对象。
+     */
     public static User of(String id, String name, String sex, int age, String phone) {
         return new User(id, name, sex, age, phone);
     }
 
+    /**
+     * 重写的 toString 方法，用于生成用户信息的字符串表示。
+     * 输出格式为：id name sex age phone
+     *
+     * @return 用户信息的字符串表示。
+     */
     @Override
     public String toString() {
         return String.format("%s\t%s\t%s\t%s\t%s", id, name, sex, age, phone);
     }
+
+    /**
+     * 非受检异常。
+     */
+    static class UserCreateError extends RuntimeException {
+        public UserCreateError(String message) {
+            super(message);
+        }
+    }
 }
+
